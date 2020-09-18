@@ -6,7 +6,8 @@ module RedmineLockEmailNotificationOptions
       base.class_eval do
         extend ClassMethods
         class << self
-          alias_method_chain :valid_notification_options, :lock
+          alias_method :valid_notification_options_without_lock, :valid_notification_options
+          alias_method :valid_notification_options, :valid_notification_options_with_lock
         end
       end
     end

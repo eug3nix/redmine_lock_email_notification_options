@@ -4,9 +4,7 @@ Redmine::Plugin.register :redmine_lock_email_notification_options do
   name 'Redmine Lock Email Notification Options plugin'
   author 'Alex Shulgin <ash@commandprompt.com>'
   description 'Lock user account email notification option at the default setting'
-  version '0.2.0'
-#  url 'http://example.com/path/to/plugin'
-#  author_url 'http://example.com/about'
+  version '0.2.1'
 end
 
 prepare_block = Proc.new do
@@ -14,7 +12,7 @@ prepare_block = Proc.new do
 end
 
 if Rails.env.development?
-  ActionDispatch::Reloader.to_prepare { prepare_block.call }
+  ((Rails.version > "5")? ActiveSupport::Reloader : ActionDispatch::Callbacks).to_prepare { prepare_block.call }
 else
   prepare_block.call
 end
